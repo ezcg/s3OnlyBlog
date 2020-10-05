@@ -11,7 +11,7 @@
 <thead>
 <tr>
 <th scope="col">Title</th>
-<th scope="col">Deployed</th>
+<th scope="col">Deploy Status</th>
 <th scope="col">&nbsp;</th>
 <th scope="col">&nbsp;</th>
 </tr>
@@ -24,11 +24,13 @@
         <th scope="row"><%= blogs[i].dataValues.title %></th>
         <td>
         <% if (blogs[i].dataValues.deployed == 2) { %>
-            <a href='<%= siteConfigs.prodUrl %>/<%= blogs[i].dataValues.linkTitle %>' target='_blank'>View Live</a>
+            Deployed - <a href='<%= siteConfigs.prodUrl %>/<%= blogs[i].dataValues.linkTitle %>' target='_blank'>View Live</a>
+        <% } else if (blogs[i].dataValues.deployed == 1) { %>
+                Deploy ready
         <% } else if (blogs[i].dataValues.deleted == 1) { %>
             Deleted next deploy
         <% } else { %>
-            No
+            Edit mode
         <% } %>
         </td>
         <td><a href='/form?id=<%= blogs[i].dataValues.id%>'>Edit</a></td>
