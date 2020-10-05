@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+  blog:
+    container_name: blog
+    hostname: blog
+    depends_on:
+      - db
+    build:
+      context: app
+      dockerfile: Dockerfile.ubuntu
+    working_dir: /var/app/current
+    ports:
+      - "8082:8082"
+      - "9228:9229"
+    stdin_open: true
+    tty: true
+    volumes:
+      - "./app:/var/app/current"
+    command: sh -c "bash /var/app/current/docker_init.sh"
+
+  db:
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    container_name: db
+    restart: "no"
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    working_dir: /app
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: users
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql/docker/data/db:/var/lib/mysql
+      - ./mysql:/app
+
+# https://stackoverflow.com/questions/55559386/how-to-fix-mbind-operation-not-permitted-in-mysql-error-log

@@ -1,0 +1,6 @@
+module.exports = {
+  ID: 'ID_FROM_AWS',
+  SECRET:'SECRET_FROM_AWS',
+  BUCKET_NAME:'NAME_OF_THE_S3_DIRECTORY'
+}
+

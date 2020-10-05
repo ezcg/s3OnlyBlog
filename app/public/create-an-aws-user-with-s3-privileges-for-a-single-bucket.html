@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143446630-7"></script>
+    <script>
+        console.log("ignore", getCookie("ignore_visitor"));
+        if (window.location.hostname == 'blog.ezcg.com' && !getCookie("ignore_visitor")) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-143446630-7');
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ezcg.com:Create an AWS user with s3 privileges for a single bucket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everything and nothing">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/prodStyle.css" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" style='justify-content: normal;'>
+        <a class="navbar-brand" href="/">blog.ezCG.com</a> <div class='siteTitle'>full stack web dev blog</div>
+    </div>
+</nav>
+
+<div id='imageViewerOverlayCont'>
+    <div id='closeXLeft'>X</div>
+    <div id='closeXRight'>X</div>
+    <div id='imageViewerOverlay'></div>
+</div>
+
+
+
+
+<div class="container container-body">
+
+<div class='blogTitleCont'>
+<h1 class='blogTitle'>Create an AWS user with s3 privileges for a single bucket</h1>
+</div>
+
+  <div class='tagCont'>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/aws.html'
+      >#AWS</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/s3.html'
+      >#S3</a></div>
+  
+    <div style='clear:both;'></div>
+  </div>
+
+
+<div class='blogBody'>Create an AWS user with s3 privileges for a single bucket</h1>
+</div>
+
+  <div class='tagCont'>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/aws.html'
+      >#AWS</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/s3.html'
+      >#S3</a></div>
+  
+    <div style='clear:both;'></div>
+  </div>
+
+
+<div class='blogBody'><ul>
+<li><a href='https://portal.aws.amazon.com/billing/signup'>Signup Form</a> Part of the sign-up procedure involves receiving a phone call and entering a verification code on the phone keypad.
+</li>
+<li><a href='https://console.aws.amazon.com/'>Sign In Form</a></li>
+</ul>
+
+<p>If you've just created your account, you will be logged in as the root account. </p>
+<p>If you are signing in, you'll need to be signed in as your root account or an account that has privileges for creating users.</p>
+<ul>
+<li>Goto <a href='https://console.aws.amazon.com/iam/home'>IAM</a> home and create a user named demo 
+<li>For Access Type, check off 'Programmatic access'. Click 'Next Permissions'.
+<li>Click Next:Review.
+<li>Click Create user.
+<li>Download the .csv file of the keys generated for user demo.
+</ul>
+<img src='/img/205.png' class='blogImage'>
+<ul>
+<li>Copy the arn for the user into a local text file so that it may be used later.
+</ul>
+
+<p><a href='https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html'>Install aws cli</a>. It has a lot of helpful commands.</p>
+<p>After you install aws cli, in your shell terminal, run:</p>
+<div class="code">aws configure</div>
+<p>You'll be prompted to enter the access keys saved in the .csv file.</p>
+<p>Instead of running aws configure, you can enter the credentials manually. On your local desktop, create an .aws folder in your user directory. On the command line, run:</p>
+<div class='code'>mkdir ~/.aws && touch ~/.aws/credentials</div>
+
+<p>Open ~/.aws/credentials. Copy the access keys from the .csv file created earlier and paste them into ~/.aws/credentials in the following format. If you haven't created a bucket yet, leave region blank for now. Otherwise, get the region from your bucket. Should be in the url.</p>
+<div class='code'>[default]
+aws_access_key_id = id_from_csv
+aws_secret_access_key = key_from_csv
+region = region_from_bucket_url
+</div>
+
+<p>Create a bucket that this user can deploy to <a href='/create-a-static-website-on-aws-s3-and-deploy-a-reactjs-app-to-it.html'>here</a>.</p>
+<p>Full <a href='https://docs.aws.amazon.com/AmazonS3/latest/dev/website-hosting-custom-domain-walkthrough.html'>AWS tutorial on creating a website using an S3 bucket</a>.
+</div>
+</div>
+</div>
+
+<script>
+
+  document.getElementById('closeXLeft').addEventListener('click', closeX);
+  document.getElementById('closeXRight').addEventListener('click', closeX);
+  function closeX() {
+    document.getElementById("imageViewerOverlayCont").style.display = 'none';
+    let el = document.getElementById("imageViewerOverlay");
+    el.removeChild(document.getElementById("imageGalleryFullImage"));
+  }
+  let elArr = document.getElementsByClassName("blogImage");
+  Array.from(elArr).forEach(function(el) {
+    el.addEventListener('click', thumbClick);
+  });
+
+  function thumbClick(e) {
+    document.getElementById("imageViewerOverlayCont").style.display = 'block';
+    let imgSrc = e.srcElement.attributes.src.nodeValue
+    let imgDom = document.createElement("img");
+    imgDom.src = imgSrc;
+    imgDom.className = 'imageGalleryFullImage';
+    imgDom.id = 'imageGalleryFullImage';
+    let el = document.getElementById("imageViewerOverlay");
+    el.appendChild(imgDom);
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<div class="footerBlock"> &nbsp; </div>
+
+</body>
+</html>
+

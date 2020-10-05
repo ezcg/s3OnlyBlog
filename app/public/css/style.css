@@ -1,0 +1,174 @@
+.navbar {
+    margin-bottom:20px;
+}
+.badgeLayoutTextArea, .badgeLayoutText, .badgeTagLayoutText {
+    position:absolute;
+    bottom:3px;
+    right:10px;
+}
+.badgeLayoutTextArea {
+    right:18px;
+}
+.badgeLayoutText {
+    right:3px;
+}
+.badgeTagLayoutText {
+    right:7px;
+}
+.badgeLayoutCont {
+    position:relative;
+}
+.listRow {
+    padding:4px 4px 4px 0px;
+}
+.tagTextField{
+    width:300px;
+}
+
+.tagTextFieldCont {
+    border:0px solid black;
+    width:304px;
+}
+
+.tagCol {
+    border:0px solid black;
+}
+
+.tagAddedLinkCont, .tagAvailableLinkCont {
+    border-radius:5px;
+    border:1px solid #cccccc;
+    padding:2px 4px 2px 4px;
+    float:left;
+    margin:1px;
+}
+#tagsAdded, #tagsAvailable {
+    border:1px solid #ced4da;
+    padding:4px;
+    min-height:40px;
+}
+.headerRow {
+    border:0px solid black;
+    font-weight:bold;
+}
+#imageErrorMsg {
+    color:red;
+    font-weight:bold;
+    margin:10px auto;
+    width:500px;
+}
+
+.blogimage {
+
+}
+.blogThumbCont {
+    border:0px solid black;
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    float:left;
+    cursor:pointer;
+}
+.blogThumbContBlogEditForm {
+    margin:0px 1px 0px 1px;
+    height:124px;
+}
+.blogthumb {
+    height:100px;
+    border:0px solid black;
+    padding:0px;
+}
+#blogSpecificThumbsPrev, #blogSpecificThumbsNext {
+    width:30px;
+    font-weight:bold;
+    font-size:25px;
+    padding:30px 0px 0px 0px;
+    cursor:pointer;
+    color: #024dbc;
+    border:0px solid black;
+}
+#blogSpecificThumbsPrev {
+    float:left;
+}
+#blogSpecificThumbsNext {
+    float:right;
+}
+#blogSpecificThumbsDisplay {
+    float:left;
+}
+#blogSpecificImageGalleryNext {
+
+}
+#imageGalleryContLabel, #imageGalleryContSubLabel {
+    margin:0px auto;
+    width: 1082px;
+}
+#imageGalleryCont {
+    margin:0px auto;
+    width: 1082px;
+    border:1px solid #ced4da;
+    border-radius:5px;
+    height:126px;
+}
+
+.galleryThumbContCont {
+    width:106px;
+    height:130px;
+    float:left;
+    display:none;
+}
+.galleryThumbCont {
+    width:102px;
+    height:102px;
+    border:1px solid black;
+    margin:2px;
+    padding:0px;
+}
+
+#imageGalleryNavCont {
+    margin:10px auto;
+    width:300px;
+    border:1px solid black;
+    border-radius:20px;
+}
+#imageGalleryNavPrev, #imageGalleryNavNext {
+    font-weight:bold;
+    font-size:30px;
+    color:#024dbc;
+}
+#imageGalleryNavNext {
+    float:right;
+}
+#imageGalleryNavPrev {
+    float:left;
+}
+.container-imagegallery {
+    width:1115px;
+    position:relative;
+    min-height:800px;
+}
+.deleteImageGalleryBtn{
+    margin:0px auto;
+    width:150px;
+}
+.deleteCheckboxCont{
+    text-align:center;
+    font-size:14px;
+}
+
+#galleryThumbWrapper {
+    min-height:300px;
+}
+#blogValidationError, #serverResponse {
+    font-weight:bold;
+    color:red;
+    padding-bottom:6px;
+}
+#serverResponse {
+    text-align:center;
+}
+#buttonsCont {
+    margin:10px auto;
+    width:1082px;
+    border-top:0px solid #cccccc;
+    padding-top:10px;
+}

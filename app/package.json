@@ -1,0 +1,55 @@
+{
+  "name": "blog_backend",
+  "version": "1.0.0",
+  "description": "Node.js Rest Apis with Express, Sequelize & MySQL",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startdev": "ENVIRONMENT=dev PORT=8082 nodemon --watch /var/app/current -e js,ejs,html,json --inspect=0.0.0.0:9229 server.js",
+    "start": "ENVIRONMENT=prod node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest",
+    "api",
+    "sequelize",
+    "mysql"
+  ],
+  "author": "bezkoder",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.728.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "file-type": "^15.0.0",
+    "formidable": "^1.2.2",
+    "google-auth-library": "^6.0.6",
+    "googleapis": "^40.0.0",
+    "image-size": "^0.9.1",
+    "image-thumbnail": "^1.0.10",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.27.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.1.0",
+    "pug": "^3.0.0",
+    "read-chunk": "^3.2.0",
+    "sequelize": "^6.3.3",
+    "userid": "^1.0.0-beta.6",
+    "wget-improved": "^3.2.1",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "public/*.html"
+    ]
+  }
+}

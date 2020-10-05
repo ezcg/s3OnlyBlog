@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143446630-7"></script>
+    <script>
+        console.log("ignore", getCookie("ignore_visitor"));
+        if (window.location.hostname == 'blog.ezcg.com' && !getCookie("ignore_visitor")) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-143446630-7');
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ezcg.com:<%- title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everything and nothing">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/prodStyle.css" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" style='justify-content: normal;'>
+        <a class="navbar-brand" href="/">blog.ezCG.com</a> <div class='siteTitle'>full stack web dev blog</div>
+    </div>
+</nav>
+
+<div id='imageViewerOverlayCont'>
+    <div id='closeXLeft'>X</div>
+    <div id='closeXRight'>X</div>
+    <div id='imageViewerOverlay'></div>
+</div>
+
+<% if (locals.error) { %>
+    <br />
+    <div class="container alert alert-danger"><div class="errorMsg"><%= locals.error %></div></div>
+<% } %>
+<% if (locals.message) { %>
+    <br />
+    <div class="container alert alert-primary"><div class="message"><%= locals.message %></div></div>
+<% } %>

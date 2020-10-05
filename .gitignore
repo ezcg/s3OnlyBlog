@@ -1,0 +1,23 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+
+.idea
+/app/config/*.config.js
+/app/config/*.config.env
+node_modules
+build
+.DS_Store
+.env
+/mysql/data.sql
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+docker
+public/img
+public/*.html
+public/words_dictionary.json
+

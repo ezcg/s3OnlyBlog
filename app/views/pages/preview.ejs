@@ -1,0 +1,50 @@
+<%- include('../partials/headerpreview.ejs', {title:title}); %>
+<div class="container container-body">
+
+<div class='blogTitleCont'>
+<h1 class='blogTitle'><%= title %></h1>
+</div>
+<% if (tagNamesAddedArr) { %>
+  <div class='tagCont'>
+  <% for(let i in tagNamesAddedArr) { %>
+    <div class='tagLinkToBlog'><a
+        href='<%- isDeployment
+          ? siteConfigs.prodUrl + '/' + tagNamesAddedArr[i].tag.toLowerCase() + '.html'
+          : '/indextag?tag_id=' + tagNamesAddedArr[i].id + '&tag=' + tagNamesAddedArr[i].tag.toLowerCase() %>'
+      >#<%= tagNamesAddedArr[i].tag %></a></div>
+  <% } %>
+    <div style='clear:both;'></div>
+  </div>
+<% } %>
+
+<div class='blogBody'><%- body %></div>
+</div>
+</div>
+
+<script>
+
+  document.getElementById('closeXLeft').addEventListener('click', closeX);
+  document.getElementById('closeXRight').addEventListener('click', closeX);
+  function closeX() {
+    document.getElementById("imageViewerOverlayCont").style.display = 'none';
+    let el = document.getElementById("imageViewerOverlay");
+    el.removeChild(document.getElementById("imageGalleryFullImage"));
+  }
+  let elArr = document.getElementsByClassName("blogImage");
+  Array.from(elArr).forEach(function(el) {
+    el.addEventListener('click', thumbClick);
+  });
+
+  function thumbClick(e) {
+    document.getElementById("imageViewerOverlayCont").style.display = 'block';
+    let imgSrc = e.srcElement.attributes.src.nodeValue
+    let imgDom = document.createElement("img");
+    imgDom.src = imgSrc;
+    imgDom.className = 'imageGalleryFullImage';
+    imgDom.id = 'imageGalleryFullImage';
+    let el = document.getElementById("imageViewerOverlay");
+    el.appendChild(imgDom);
+  }
+</script>
+
+<%- include('../partials/footerpreview.ejs'); %>

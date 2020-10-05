@@ -1,0 +1,178 @@
+<%- include('../partials/header.ejs', {title:"Add/Edit Tag"}); %>
+
+<div class="container container-body">
+
+<form accept-charset="UTF-8" method="POST" action="/tags/submitform" enctype="application/x-www-form-urlencoded">
+  <input type='hidden' name='action' value='add'>
+  <h4>Add Tag</h4>
+  <div class="listRow">
+    <div class="badgeLayoutCont tagTextFieldCont">
+    <input maxlength="<%= charLimitObj.maxCharsTag %>" type="text" name="tag" class="form-control tagTextField" id="tag">
+    <div class="badge bg-secondary badgeTagLayoutText" id="tagLengthMsg"></div>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<br />
+
+<h4>Edit Tags</h4>
+  Any editing or deleting of tag names that are live will require Deploy to make the changes live.
+  <br />
+  <br />
+<form
+  accept-charset="UTF-8"
+  method="POST"
+  action="/tags/submitform"
+  enctype="application/x-www-form-urlencoded"
+  id="updateform"
+>
+<input type='hidden' name='action' value='update'>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Tag Name</th>
+    <th scope="col">Local</th>
+    <th scope="col">Prod</th>
+    <th scope="col">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+
+<% for(let i in tagArr) { %>
+  <% let tagObj = tagArr[i] %>
+
+    <tr>
+    <td>
+      <div class="badgeLayoutCont tagTextFieldCont">
+        <input
+          class="form-control tagTextField"
+          maxlength="<%= charLimitObj.maxCharsTag %>"
+          type="text"
+          name="tagArr[]"
+          value="<%= tagObj.tag %>"
+          id="<%= "tag" + i %>"
+        >
+        <div class="badge bg-secondary badgeTagLayoutText" id="<%= "tagLengthMsg" + i %>"></div>
+        <input type="hidden" name='tagIdArr[]' value="<%= tagObj.id %>">
+      </div>
+    </td>
+    <td>
+      <a href='/indextag?tag=<%= tagObj.tag %>&tag_id=<%= tagObj.id %>'>#<%= tagObj.tag %></a>
+    </td>
+    <td>
+      <a href='<%- siteConfigs.prodUrl %>/<%= tagObj.tag.toLowerCase() %>.html'>#<%= tagObj.tag %></a>
+    </td>
+    <td>
+      &nbsp; &nbsp; <input
+        type="checkbox"
+        class="deleteTagCheckbox"
+        name='tagDeleteIdArr[]'
+        value="<%= tagObj.id %>"
+        <%= tagObj.deleted ? 'checked' : ''; %>
+      >
+      <% if (tagObj.deleted) { %>
+        <br />Deleted once deployed
+      <% } %>
+    </td>
+
+    </tr>
+
+<% } %>
+
+</tbody>
+</table>
+
+<button
+  type="submit"
+  class="btn btn-primary"
+>Update</button>
+
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm-submit" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You have selected to delete 1 or more tags. This will remove the tag from any blogs tagged with it and
+        requires you to Deploy to rebuild the live tag structure. Click 'Cancel' to cancel deletion or 'Confirm' to delete.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitConfirmedBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+
+// The modal will set confirmed to true when the 'Confirm' button is clicked and the form can then be submitted
+// without being blocked by the confirm() method
+let confirmed = false;
+
+function confirm(e) {
+  if (confirmed === false) {
+    let deleteTagCheckboxElArr = document.getElementsByClassName("deleteTagCheckbox");
+    let isDeleting = false;
+    for (let i in deleteTagCheckboxElArr) {
+      let el = deleteTagCheckboxElArr[i];
+      if (el.checked === true) {
+        isDeleting = true;
+        break;
+      }
+    }
+    if (isDeleting === true) {
+      e.preventDefault();
+      let options = {show:true};
+      let myModal = new bootstrap.Modal(document.getElementById('confirm-submit'), options);
+      myModal.show();
+    }
+  }
+}
+
+const form = document.getElementById('updateform');
+form.addEventListener('submit', confirm);
+
+// listen for click on 'Confirm' in modal
+document.getElementById("submitConfirmedBtn").addEventListener("click", function() {
+  confirmed = true;
+  document.getElementById("updateform").submit();
+});
+
+let maxCharsTag = document.getElementById("tag").maxLength;
+document.addEventListener('keyup', logTagKey);
+function logTagKey() {
+  let tagLength = document.getElementById('tag').value.length;
+  document.getElementById('tagLengthMsg').innerHTML = (tagLength + ' / ' + maxCharsTag);
+}
+logTagKey();
+
+function logTagArrKey(i) {
+  let tagId = "tag" + i;
+  let tagLengthMsg = "tagLengthMsg" + i;
+  let len = document.getElementById(tagId).value.length;
+  document.getElementById(tagLengthMsg).innerHTML = (len + ' / ' + document.getElementById("tag" + i).maxLength);
+}
+
+let index = "";
+<% for(let i in tagArr) { %>
+   index = "<%= i %>";
+   document.addEventListener('keyup', logTagArrKey(index));
+   logTagArrKey(index);
+<% } %>
+
+</script>
+
+<%- include('../partials/footer.ejs'); %>

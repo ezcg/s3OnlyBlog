@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143446630-7"></script>
+    <script>
+        console.log("ignore", getCookie("ignore_visitor"));
+        if (window.location.hostname == 'blog.ezcg.com' && !getCookie("ignore_visitor")) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-143446630-7');
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ezcg.com:AbbotKinneyBl - Content Card Info Delivery System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everything and nothing">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/prodStyle.css" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" style='justify-content: normal;'>
+        <a class="navbar-brand" href="/">blog.ezCG.com</a> <div class='siteTitle'>full stack web dev blog</div>
+    </div>
+</nav>
+
+<div id='imageViewerOverlayCont'>
+    <div id='closeXLeft'>X</div>
+    <div id='closeXRight'>X</div>
+    <div id='imageViewerOverlay'></div>
+</div>
+
+
+
+
+<div class="container container-body">
+
+<div class='blogTitleCont'>
+<h1 class='blogTitle'>AbbotKinneyBl - Content Card Info Delivery System</h1>
+</div>
+
+  <div class='tagCont'>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/mysql.html'
+      >#mysql</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/nginx.html'
+      >#nginx</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/reactjs.html'
+      >#ReactJS</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/php.html'
+      >#php</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/laravel.html'
+      >#Laravel</a></div>
+  
+    <div class='tagLinkToBlog'><a
+        href='http://blog.ezcg.com/nextjs.html'
+      >#NextJS</a></div>
+  
+    <div style='clear:both;'></div>
+  </div>
+
+
+<div class='blogBody'><div style='clear:both;'></div><img src='/img/9.jpeg' class='blogImage'><div style='clear:both;'></div>
+
+<p>Aggregates media APIs and displays collected content in a deep and wide carousel display.  </p>
+
+<p>Admin/cronjobs: PHP Laravel 7, MySQL, jQuery, AWS S3, NextJS, Carousel ReactJS modified from <a href='https://github.com/YIZHUANG/react-multi-carousel'>github.com/YIZHUANG/react-multi-carousel</a>
+</p>
+<p>Administrative code runs in Docker. Json and site assets that live on S3. User facing app runs on Vercel.com</p>
+
+<p>Source code: <a href='https://github.com/ezcg/abbotkinneybl'>github.com/ezcg/abbotkinneybl</a></p>
+
+<p>Vercel.com site: <a href='https://abbotkinneybl.com'>abbotkinneybl.com</a></p>
+
+<p>About: <a href='http://akblvd.com'>akblvd.com</a></p>
+
+<p>Different content, same code:</p>
+<ul>
+<li><a href='https://entertainers.now.sh'>entertainers.now.sh</a>
+<li><a href='https://uscongress.vercel.app'>uscongress.vercel.app</a>
+<li><a href='https://uspolitics.now.sh'>uspolitics.now.sh</a>
+</ul>
+<p><a href='https://www.reddit.com/r/ezcg/comments/iv9ggf/abbotkinneybl_app_aggregate_media_streams_and/'>Questions/Comments</a> on reddit.com/r/ezcg
+
+<h1><b>Screenshots</b></h1>
+<h3>Create categories</h3>
+<div style='clear:both;'></div><img src='/img/223.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Add main accounts (business, person)</h3>
+<div style='clear:both;'></div><img src='/img/222.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Add unlimited social media accounts to the main accounts (or just import them from Twitter)</h3>
+<div style='clear:both;'></div><img src='/img/221.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Manage the social media for each account</h3>
+<div style='clear:both;'></div><img src='/img/220.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Add contact info for the main account</h3>
+<div style='clear:both;'></div><img src='/img/219.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Add hours of operation for the main account</h3>
+<div style='clear:both;'></div><img src='/img/218.png' class='blogImage'><div style='clear:both;'></div>
+<h3>The customer/user/visitor then sees the content neatly organized by category in a responsive web page. They can swipe through the top level of the category:</h3>
+<div style='clear:both;'></div><img src='/img/224.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Or they can dig down into the content of a single entity.</h3>
+<div style='clear:both;'></div><img src='/img/225.png' class='blogImage'><div style='clear:both;'></div>
+<h3>Or they can click on 'Info' to get the hours, contact info, address and link to Google maps.</h3>
+<div style='clear:both;'></div><img src='/img/226.png' class='blogImage'><div style='clear:both;'></div>
+
+See it online: <a href='https://abbotkinneybl.com'>AbbotKinneyBl.com</a>
+
+<p><a href='https://www.reddit.com/r/ezcg/comments/iv9ggf/abbotkinneybl_app_aggregate_media_streams_and/'>Questions/Comments</a> on reddit.com/r/ezcg
+</div>
+</div>
+</div>
+
+<script>
+
+  document.getElementById('closeXLeft').addEventListener('click', closeX);
+  document.getElementById('closeXRight').addEventListener('click', closeX);
+  function closeX() {
+    document.getElementById("imageViewerOverlayCont").style.display = 'none';
+    let el = document.getElementById("imageViewerOverlay");
+    el.removeChild(document.getElementById("imageGalleryFullImage"));
+  }
+  let elArr = document.getElementsByClassName("blogImage");
+  Array.from(elArr).forEach(function(el) {
+    el.addEventListener('click', thumbClick);
+  });
+
+  function thumbClick(e) {
+    document.getElementById("imageViewerOverlayCont").style.display = 'block';
+    let imgSrc = e.srcElement.attributes.src.nodeValue
+    let imgDom = document.createElement("img");
+    imgDom.src = imgSrc;
+    imgDom.className = 'imageGalleryFullImage';
+    imgDom.id = 'imageGalleryFullImage';
+    let el = document.getElementById("imageViewerOverlay");
+    el.appendChild(imgDom);
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<div class="footerBlock"> &nbsp; </div>
+
+</body>
+</html>
+

@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Id": "Policy1554997301629",
+  "Statement": [
+    {
+      "Sid": "Stmt1554997296636",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::blog.ezcg.com/*"
+    }
+  ]
+}

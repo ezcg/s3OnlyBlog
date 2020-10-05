@@ -1,0 +1,74 @@
+<%- include('../partials/headerpreview.ejs', {title: 'blog'}); %>
+
+<div class="container container-body">
+
+<%- include('../partials/indexheader.ejs', {title: 'blog', tagArr:tagArr}); %>
+
+<% if (tag) { %>
+  <div style="clear:both;"></div><br/>
+  <div class="indexTagHeader">Blogs tagged with #<%- tag %></div>
+<% } %>
+
+<% for(let i = 0; i < arr.length; i++) {
+
+  let tmp = arr[i];
+  let blogId = tmp.id;
+  let title = tmp.title;
+  let linkTitle = tmp.linkTitle;
+  let description = tmp.description;
+  // let userId = tmp.userId;
+  // let username = tmp.username;
+  // let name = tmp.name;
+  let tags = tmp.tags;
+  let updatedAt = tmp.updatedAt;
+  let thumbnail = tmp.thumbnail;
+  const offset = new Date().getTimezoneOffset();
+  updatedAt = new Date(updatedAt.getTime() + (offset*60*1000));
+  updatedAt = updatedAt.toISOString().split('T')[0]
+
+  %>
+
+  <div class="row indexRow">
+    <div class="bg-secondary text-white indexHeader ">
+    <a class="text-white indexHeaderLinkTitle" href='/<%= linkTitle %>' target='_blank'><%= title %></a>
+    <span style='display:none;' class='indexUpdatedAt'><%= updatedAt %></span>
+    </div>
+    <div class="indexSummary">
+    <% if (thumbnail) { %>
+      <img src='<%= thumbnail %>' class='blogSummaryThumb'>
+    <% } %>
+    <%= description %>
+    <br />
+    <a class="text-dark" href='/<%= linkTitle %>' target='_blank'><%= title %>&raquo;</a>
+    <% if (tags) { %>
+      <div class="indexTags"><%= tags %></div>
+    <% } %>
+    </div>
+  </div>
+
+<% } %>
+
+<div class="indexNavCont">
+<% if (numPages > 1) { %>
+  <div class="indexNavPrevCont"><a
+      class="indexNavLink <% if (page == 0) { %> indexNavLinkDisabled <% } %>"
+      <% if (isDeployment) { %>
+        href="/index<%= (page - 1 == 0 ? "" : page - 1) %>.html"
+      <% } else { %>
+        href="/index?page=<%= (page - 1 >= 0 ? page - 1 : 0) %>"
+      <% } %>
+    >&laquo; Previous</a></div>
+  <div class="indexNavNextCont"><a
+      class="indexNavLink <% if (page + 1 == numPages) { %> indexNavLinkDisabled <% } %>"
+      <% if (isDeployment) { %>
+        href="/index<%= (page + 1) %>.html"
+      <% } else { %>
+        href="/index?page=<%= page + 1 %>"
+      <% } %>
+    >Next &raquo;</a></div>
+<% } %>
+</div>
+
+</div>
+
+<%- include('../partials/footer.ejs'); %>

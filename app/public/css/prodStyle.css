@@ -1,0 +1,192 @@
+/* start overwrite */
+a {
+    text-decoration:none;
+    font-weight:bold;
+    color:#024dbc;
+
+}
+
+/* end overwrite */
+
+.indexHeader{
+    text-align:left;
+    border-radius:10px;
+    border:0px solid black;
+    padding:8px;
+    margin:10px 0px 10px 0px;
+}
+.indexHeaderLinkTitle {
+    float:left;
+    text-decoration:none;
+    font-weight:bold;
+}
+.indexRow {
+    margin:0px 0px 0px 0px;
+}
+
+.indexUpdatedAt {
+    float:right;
+}
+
+.indexNavCont {
+    margin:10px auto;
+    width:300px;
+}
+.indexNavLink {
+    color:#000000;
+    font-weight:bold;
+    text-decoration:none;
+}
+.indexNavPrevCont, .indexNavNextCont {
+    border-radius:10px;
+    width:100px;
+    border:2px solid #000000;
+    background-color:#fafafa;
+    padding:6px;
+    text-align:center;
+}
+.indexNavPrevCont {
+    float:left;
+}
+.indexNavNextCont {
+    float:right;
+}
+.indexNavLinkDisabled {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: #cccccc;
+    font-weight:bold;
+}
+
+.indexTagHeader {
+    font-weight:bold;
+    width:300px;
+    text-align:center;
+    margin:0px auto;
+}
+
+.footerBlock {
+    height:100px;
+}
+
+.tagLinkToBlog {
+    float:left;
+    margin-right:4px;
+}
+
+/* single blog view */
+.blogTitle {
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.blogBody {
+    margin-top:20px;
+}
+
+.blogImage {
+    max-width:1000px;
+    border:1px solid black;
+    margin:4px 4px 14px 4px;
+    cursor:pointer;
+}
+
+#imageContainer {
+    display:none;
+    position:absolute;
+    top:10px;
+    left:10px;
+    border:1px solid black;
+}
+
+.code, .c {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+    padding:4px;
+    margin:2px 2px 8px 2px;
+    border:1px solid #cccccc;
+    background-color:#eeeeee;
+    color:#000000;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+.blogSummaryThumb {
+    float:left;
+    width:75px;
+    height:75px;
+    margin-right:2px;
+}
+
+.tagLinkHeader {
+    width:159px;
+    float:left;
+    border:0px solid black;
+}
+
+.container-body {
+    border:1px solid #818182;
+    border-radius:10px;
+    margin-top:5px;
+    background-color:#fafafa;
+    padding:10px 10px 10px 10px;
+}
+body {
+    background-color:#ced4da;
+}
+
+
+#imageViewerOverlayCont {
+    z-index:2;
+    position:fixed;
+    top:50px;
+    left:50px;
+    display:none;
+    padding:4px;
+    border:1px solid black;
+    background-color:#ffffff;
+
+}
+#imageViewerOverlay {
+
+}
+.imageGalleryFullImage {
+    border:1px solid black;
+}
+#closeXLeft, #closeXRight {
+    text-align:right;
+    color:#024dbc;
+    font-weight:bold;
+    font-size:24px;
+    margin-right:14px;
+    cursor:pointer;
+    float:right;
+}
+#closeXLeft {
+    text-align:left;
+    margin-left:14px;
+    float:left;
+}
+.searchForm {
+    margin-top:10px;
+}
+.siteTitle {
+    font-weight:bold;
+    font-size:18px;
+    float:left;
+}
+.tagAvailableLinkCont, .tagAddedLinkCont {
+    background-color:#ffffff;
+}
+@media screen and (max-width: 411px) {
+    .blogImage {
+        max-width:370px;
+    }
+}
+

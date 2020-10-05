@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143446630-7"></script>
+    <script>
+        console.log("ignore", getCookie("ignore_visitor"));
+        if (window.location.hostname == 'blog.ezcg.com' && !getCookie("ignore_visitor")) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-143446630-7');
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ezcg.com:blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everything and nothing">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/prodStyle.css" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" style='justify-content: normal;'>
+        <a class="navbar-brand" href="/">blog.ezCG.com</a> <div class='siteTitle'>full stack web dev blog</div>
+    </div>
+</nav>
+
+<div id='imageViewerOverlayCont'>
+    <div id='closeXLeft'>X</div>
+    <div id='closeXRight'>X</div>
+    <div id='imageViewerOverlay'></div>
+</div>
+
+
+
+
+
+<div class="container container-body">
+
+
+  <div class='tagLinkHeader'>
+    <a href='/aws.html'>#AWS</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/reactjs.html'>#ReactJS</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/s3.html'>#S3</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/docker.html'>#Docker</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/nginx.html'>#nginx</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/phptonode.html'>#phpToNode</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/php.html'>#php</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/ejs.html'>#ejs</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/mysql.html'>#mysql</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/nodejs.html'>#nodejs</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/elasticbeanstalk.html'>#ElasticBeanstalk</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/laravel.html'>#Laravel</a>
+  </div>
+
+  <div class='tagLinkHeader'>
+    <a href='/nextjs.html'>#NextJS</a>
+  </div>
+
+<div style='clear:both;'></div>
+
+
+
+  <div style="clear:both;"></div><br/>
+  <div class="indexTagHeader">Blogs tagged with #nodejs</div>
+
+
+
+
+  <div class="row indexRow">
+    <div class="bg-secondary text-white indexHeader ">
+    <a class="text-white indexHeaderLinkTitle" href='/flashcard-app.html' target='_blank'>Flashcard App</a>
+    <span style='display:none;' class='indexUpdatedAt'>2020-09-22</span>
+    </div>
+    <div class="indexSummary">
+    
+      <img src='/img/5_thumb.png' class='blogSummaryThumb'>
+    
+    What&#39;s involved in setting up a professional website on aws with elastic beanstalk.
+
+    <br />
+    <a class="text-dark" href='/flashcard-app.html' target='_blank'>Flashcard App&raquo;</a>
+    
+    </div>
+  </div>
+
+
+
+  <div class="row indexRow">
+    <div class="bg-secondary text-white indexHeader ">
+    <a class="text-white indexHeaderLinkTitle" href='/aws-s3-only-blog-platform.html' target='_blank'>aws s3 only blog platform</a>
+    <span style='display:none;' class='indexUpdatedAt'>2020-09-20</span>
+    </div>
+    <div class="indexSummary">
+    
+      <img src='/img/17_thumb.jpeg' class='blogSummaryThumb'>
+    
+    The administration of the blog is done locally with many different free, no-cost technologies and s3 is the cheapest way to get a website going with aws, so I thought I&#39;d take a look at just what I exactly I could get away with.
+    <br />
+    <a class="text-dark" href='/aws-s3-only-blog-platform.html' target='_blank'>aws s3 only blog platform&raquo;</a>
+    
+    </div>
+  </div>
+
+
+
+<div class="indexNavCont">
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+
+<div class="footerBlock"> &nbsp; </div>
+
+</body>
+</html>
+

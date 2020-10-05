@@ -1,0 +1,450 @@
+<%- include('../partials/header.ejs', {title:"Add/Edit Blog"}); %>
+
+
+<div class="container container-body">
+
+    <form id='form' accept-charset="UTF-8" method="POST" action="/submitform" enctype="application/x-www-form-urlencoded">
+    <input type='hidden' name='id' value='<%= id %>'>
+    <div id='metaDataCont'>
+    <div class="mb-3 badgeLayoutCont">
+        <label for="title" class="form-label">Title</label>
+
+        <div style="float:right">
+        <% if (id > 0) { %>
+            <a target="_blank" href="/preview?id=<%= id %>">preview local</a>
+        <% } %>
+        <% if (deployed === 2 && id > 0) { %>
+            &nbsp; | &nbsp;
+        <% } %>
+        <% if (deployed === 2) { %>
+            <a target="_blank" href="<%= siteConfigs.prodUrl %>/<%= linkTitle %>">view prod</a>
+        <% } %>
+        </div>
+        <input maxlength="<%= charLimitObj.maxCharsTitle %>" type="text" name="title" class="form-control" id="title" value="<%= title %>">
+        <div class="badge bg-secondary badgeLayoutText" id="titleLengthMsg"></div>
+    </div>
+    <div class="mb-3 badgeLayoutCont">
+        <label for="description" class="form-label">Description/Summary</label>
+        <textarea maxlength="<%= charLimitObj.maxCharsDescription %>" name="description" class="form-control" id="description" rows="2"><%= description %></textarea>
+        <div style='' class="badge bg-secondary badgeLayoutTextArea" id="descriptionLengthMsg"></div>
+    </div>
+
+    <!-- Require saving blog as first step so that an id is created and can be used with image uploads -->
+    <% if (!id) { %>
+        <div id='blogValidationError'></div>
+        <button type="submit" class="btn btn-primary">Save</button> - enter title and description of blog and hit save to begin.
+    <% } else { %>
+
+    <div class="mb-3 ">
+
+        <label for="tags" class="form-label">Tags Added</label>
+        <% if (tagArr.length > 0) { %>
+            <div id='tagsAdded'>
+            <% for(let i in tagArr) { %>
+                <div class="tagAddedLinkCont" id="tagAdded<%- tagArr[i].tag %>" style='display:none;'>
+                <a href="javascript:void(0)" data-tag-id="<%- tagArr[i].id %>" class="tagAddedLink" >X <%- tagArr[i].tag %></a>
+                </div>
+            <% } %>
+            <div style="clear:both;"></div>
+            </div>
+        <% } else { %>
+            <br /><a href="/tags/">Add tags here</a> and they will be displayed as links you can click on to associate with
+            this blog. Save any work before clicking away.
+        <% } %>
+
+        <label for="tagsAvailable" class="form-label">Tags Available</label>
+        <div id='tagsAvailable'>
+        <% for(let i in tagArr) { %>
+            <div class="tagAvailableLinkCont" id="tagAvailable<%- tagArr[i].tag %>" style="display:none;">
+                <a href="javascript:void(0)" data-tag-id="<%- tagArr[i].id %>" class="tagAvailableLink" >+ <%- tagArr[i].tag %></a>
+            </div>
+        <% } %>
+        <div style="clear:both;"></div>
+        </div>
+    </div>
+    </div>
+
+    <div class="mb-3 badgeLayoutCont">
+        <label for="body" class="form-label">Body</label> <a
+          href='javascript:void(0);'
+          onclick='toggleCollapse()'
+        > - <span id='toggleHideMetaDataText'>hide title, summary and tags</span></a>
+        <textarea maxlength="<%= charLimitObj.maxCharsBody %>" name="body" class="form-control" id="body" rows="10"><%= body %></textarea>
+        <div class="badge bg-secondary badgeLayoutTextArea" id="bodyLengthMsg"></div>
+    </div>
+
+    <% if (deployed === 2) { %>
+        Deployed - hit 'Save' to set the blog back to Deploy Ready. You will have to Deploy it again to make any edits live.
+    <% } else { %>
+        <a href='javascript:void(0);' data-toggle="modal" data-target="#imageUpload">Upload Images</a>
+        &nbsp; | &nbsp;
+        <label class="form-check-label" for="editmode">Edit Mode</label>
+        <input class="form-check-input" type="radio" name="deployed" id="editmode" value="0"
+        <%= (deployed === 0) ? 'checked' : '' %>
+        >
+        &nbsp; | &nbsp;
+        <label class="form-check-label" for="deployready">Deploy Ready</label>
+        <input class="form-check-input" type="radio" name="deployed" id="deployready" value="1"
+        <%= (deployed === 1) ? 'checked' : '' %>
+        >
+
+    <% } %>
+
+    <br />
+    <br />
+    <div id="imageGalleryContLabel">Select the radio button to designate it as the thumbnail that gets displayed with the article summary.</div>
+    <div id="imageGalleryCont">
+        <div class='btn' id="blogSpecificThumbsPrev">&laquo;</div>
+        <div id="blogSpecificThumbsDisplay"></div>
+        <div class='btn' id="blogSpecificThumbsNext">&raquo;</div>
+        <div style='clear:both;'></div>
+    </div>
+    <div id="imageGalleryContSubLabel">Click on thumbnail to insert html code for full size image into body text at the location of the cursor in the body. </div>
+    <div id="imageGalleryError"></div>
+    <div id='blogValidationError'></div>
+
+    <div id='buttonsCont'>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    <!-- Confirm Delete Button trigger modal -->
+    <div style='float:right;'>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+        Delete Blog
+    </button>
+<!--        - delete any images associated with this blog as well:-->
+       <input style='display:none' id='deleteImages' type='checkbox' name='deleteImages' value='1'>
+    </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body" style='display:none;'>
+    ...
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+    <a
+    id='deleteBlogBtn'
+    class="btn btn-primary"
+    >Delete</a>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- updateTags() writes comma delimited string of tag ids to this text field -->
+    <input type='hidden' name='tagIdStr' id='tagIdStr' value=''>
+
+    <% } %>
+
+    </form>
+
+    <!-- Image Upload Modal -->
+    <div class="modal fade" id="imageUpload" tabindex="-2" aria-labelledby="imageUpload" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Upload Images</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- image upload Form -->
+                            <form id="upload-photos" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="photos-input">Browse Multiple Images to Upload</label>
+                                    <br />
+                                    <br />
+                                    <input id="imageArr" type="file" name="imageArr[]" multiple="multiple" >
+                                </div>
+                                <br/>
+                                <br/>
+                                <input id="upload-button" class="btn btn-primary" type="submit" name="Photo Uploads" value="Upload" />
+                            </form>
+                        </div>
+                        <div class="row" id="imageErrorMsg">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="imageUploadClose" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+<script>
+
+    let maxCharsTitle = document.getElementById("title").maxLength;
+    document.addEventListener('keyup', logTitleKey);
+    function logTitleKey() {
+        let titleLength = document.getElementById('title').value.length;
+        document.getElementById('titleLengthMsg').innerHTML =(titleLength + ' / ' + maxCharsTitle);
+    }
+    logTitleKey();
+
+    let maxCharsDescription = document.getElementById("description").maxLength;
+    document.addEventListener('keyup', logDescriptionKey);
+    function logDescriptionKey() {
+        let descriptionLength = document.getElementById('description').value.length;
+        document.getElementById('descriptionLengthMsg').innerHTML =(descriptionLength + ' / ' + maxCharsDescription);
+    }
+    logDescriptionKey();
+
+    document.getElementById('form').addEventListener('submit', validate);
+    function validate(e) {
+        let errorMsg = "";
+        if (document.getElementById("title").value.length < 3) {
+            errorMsg+= "Title must be greater than 3 characters.<br />";
+        }
+        if (document.getElementById("description").value.length < 10) {
+            errorMsg+= "Description must be greater than 10 characters.";
+        }
+        if (errorMsg) {
+            e.preventDefault();
+            document.getElementById('blogValidationError').innerHTML = errorMsg;
+            document.getElementById('blogValidationError').style.display = 'block';
+        }
+    }
+
+    <% if (id) { %>
+
+        let blogSpecificThumbArr = [];
+        let currentThumbPosition = 0;
+        let maxThumbsInNav = 10;
+
+        document.getElementById('deleteBlogBtn').addEventListener('click', deleteBlog);
+        function deleteBlog(e) {
+            e.preventDefault();
+            let delete_images = document.getElementById("deleteImages").checked ? 1 : 0;
+            window.location.href = '/delete/<%= id %>?delete_images=' + delete_images;
+        }
+
+        function loadGallery() {
+
+            let request = new XMLHttpRequest();
+            request.open('get', '/images?blog_id=' + <%= id %>);
+
+            // AJAX request finished event
+            request.addEventListener('load', function(e) {
+                //console.log("request.response", request.response);
+                if (request.status !== 200) {
+                    let r = JSON.parse(request.response);
+                    document.getElementById("imageGalleryError").innerHTML = r.error;
+                } else {
+                    let thumbnailImageId = <%= imageId %>;// the thumbnail to go with the summary
+                    blogSpecificThumbArr = JSON.parse(request.response);
+                    let parent = document.getElementById("blogSpecificThumbsDisplay");
+                    // remove any previously loaded thumbs as all thumbs are being returned and appended
+                    if (document.getElementsByClassName('blogThumbCont').length) {
+                        document.getElementById("blogSpecificThumbsDisplay").innerHTML = "";
+                    }
+                    for(let i in blogSpecificThumbArr) {
+                        let divDom = document.createElement('div');
+                        divDom.className="blogThumbCont blogThumbContBlogEditForm";
+                        divDom.id='id_' + i;
+                        if (i >= maxThumbsInNav) {
+                            divDom.style.display='none';
+                        }
+                        let imgDom = document.createElement("img");
+                        imgDom.src = '/img/' + blogSpecificThumbArr[i].id + '_thumb.' + blogSpecificThumbArr[i].ext;
+                        imgDom.className = "blogthumb";
+
+                        let radioDom = document.createElement("input");
+                        radioDom.setAttribute("type", "radio");
+                        radioDom.setAttribute("name", "imageId");
+                        radioDom.setAttribute("value", blogSpecificThumbArr[i].id);
+                        radioDom.setAttribute("style", "margin-left: 44px;");
+                        if (blogSpecificThumbArr[i].id == thumbnailImageId) {
+                            radioDom.setAttribute("checked", true);
+                        }
+                        divDom.appendChild(radioDom);
+                        divDom.appendChild(imgDom);
+
+                        parent.appendChild(divDom);
+                        imgDom.addEventListener('click', thumbClick);
+                    }
+                    setNav();
+                }
+            });
+            request.send();
+
+        }
+        loadGallery();
+
+        function setNav() {
+            if (blogSpecificThumbArr.length <= 0 || currentThumbPosition <= 0) {
+                document.getElementById("blogSpecificThumbsPrev").classList.add("disabled");
+            } else {
+                document.getElementById("blogSpecificThumbsPrev").classList.remove("disabled");
+            }
+            if (blogSpecificThumbArr.length <= maxThumbsInNav || blogSpecificThumbArr.length <= currentThumbPosition + maxThumbsInNav ) {
+                document.getElementById("blogSpecificThumbsNext").classList.add("disabled");
+            } else {
+                document.getElementById("blogSpecificThumbsNext").classList.remove("disabled");
+            }
+        }
+        document.getElementById("blogSpecificThumbsPrev").addEventListener('click', goBlogSpecificThumbsPrev);
+        function goBlogSpecificThumbsPrev() {
+            currentThumbPosition-=maxThumbsInNav;
+            setNav();
+            mngThumbDisplay();
+        }
+        document.getElementById("blogSpecificThumbsNext").addEventListener('click', goBlogSpecificThumbsNext);
+        function goBlogSpecificThumbsNext() {
+            currentThumbPosition+=maxThumbsInNav;
+            setNav();
+            mngThumbDisplay();
+        }
+
+        function mngThumbDisplay() {
+            for(let i in blogSpecificThumbArr) {
+                if (i < currentThumbPosition || i >= currentThumbPosition + maxThumbsInNav) {
+                    document.getElementById('id_' + i).style.display = 'none';
+                } else {
+                    document.getElementById('id_' + i).style.display = 'block';
+                }
+            }
+        }
+
+        function typeInTextarea(newText, el = document.activeElement) {
+            const [start, end] = [el.selectionStart, el.selectionEnd];
+            el.setRangeText(newText, start, end, 'select');
+        }
+        // Append the html for the img tag to the bottom of the body textarea. Change filename and class name so that it is
+        // not a thumbnail
+        function thumbClick(e) {
+            let imgSrc = e.srcElement.attributes.src.nodeValue
+            imgSrc = imgSrc.replace("_thumb", "");
+            let imgHtml = "<div style='clear:both;'></div><img src='" + imgSrc + "' class='blogImage'><div style='clear:both;'></div>\n";
+            //document.getElementById("body").value+= imgHtml;
+            typeInTextarea(imgHtml, document.getElementById("body"));
+        }
+
+        document.querySelector('#upload-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            // user has not chosen any file
+            if(document.querySelector('#imageArr').files.length == 0) {
+                alert('Error : No file selected');
+                return;
+            }
+            uploadFile();
+        });
+
+        function uploadFile() {
+
+            let data = new FormData();
+
+            // file selected by the user
+            // in case of multiple files append each of them
+            let numFiles = document.querySelector('#imageArr').files.length;
+            for (let i = 0; i < numFiles; i++) {
+                data.append('files', document.querySelector('#imageArr').files[i]);
+            }
+
+            let request = new XMLHttpRequest();
+            request.open('post', '/images/uploadimages?id=' + <%= id %>);
+            request.send(data);
+            // AJAX request finished event
+            request.addEventListener('load', function(e) {
+                if (request.status !== 200) {
+                    let r = JSON.parse(request.response);
+                    console.log("r", r);
+                    document.getElementById("imageErrorMsg").innerHTML = r.error;
+                } else {
+                    //let r = JSON.parse(request.response);
+                    //console.log("response", r);
+                    document.getElementById("imageUploadClose").click();
+                    loadGallery();
+                }
+            });
+
+        }
+
+        function toggleCollapse() {
+            if (document.getElementById('metaDataCont').style.display == 'none') {
+                document.getElementById('metaDataCont').style.display = 'block';
+                document.getElementById('toggleHideMetaDataText').innerHTML = 'hide title, summary and tags';
+                document.getElementById('body').rows = 10;
+            } else {
+                document.getElementById('metaDataCont').style.display = 'none';
+                document.getElementById('toggleHideMetaDataText').innerHTML = 'show title, summary and tags';
+                document.getElementById('body').rows = 18;
+            }
+        }
+
+        let tagStr = '';
+        let tagArr = <%- JSON.stringify(tagArr) %>;
+        let tagIdAddedArr = <%- JSON.stringify(tagIdAddedArr) %>;
+
+        function tagAvailableClick(e) {
+            e.preventDefault();
+            let tagIdToAdd = parseInt(e.srcElement.dataset.tagId);
+            tagIdAddedArr.push(tagIdToAdd);
+            updateTags();
+        }
+        let tagAvailableLinkEl = document.getElementsByClassName("tagAvailableLink");
+        Array.from(tagAvailableLinkEl).forEach(function(el) {
+            el.addEventListener('click', tagAvailableClick);
+        });
+
+        function tagAddedClick(e) {
+            e.preventDefault();
+            let tagIdToRemove = parseInt(e.srcElement.dataset.tagId);
+            tagIdAddedArr = tagIdAddedArr.filter((tagIdAdded) => {
+                return tagIdAdded != tagIdToRemove;
+            })
+            updateTags();
+        }
+        let tagAddedLinkEl = document.getElementsByClassName("tagAddedLink");
+        Array.from(tagAddedLinkEl).forEach(function(el) {
+            el.addEventListener('click', tagAddedClick);
+        });
+
+        function updateTags() {
+            let tagIdStr = '';
+            for(let i in tagArr) {
+                let tagIsAdded = tagIdAddedArr.includes(tagArr[i].id);
+                if (tagIsAdded) {
+                    tagIdStr+= tagArr[i].id + ",";
+                    document.getElementById("tagAdded" + tagArr[i].tag).style.display = "block";
+                    document.getElementById("tagAvailable" + tagArr[i].tag).style.display = "none";
+                } else {
+                    document.getElementById("tagAdded" + tagArr[i].tag).style.display = "none";
+                    document.getElementById("tagAvailable" + tagArr[i].tag).style.display = "block";
+                }
+            }
+            if (tagIdStr) {
+                tagIdStr = tagIdStr.substring(0, tagIdStr.length-1);
+            }
+            document.getElementById("tagIdStr").value = tagIdStr;
+        }
+        updateTags();
+
+        let maxCharsBody = document.getElementById("body").maxLength;
+        document.addEventListener('keyup', logBodyKey);
+        function logBodyKey() {
+            let bodyLength = document.getElementById('body').value.length;
+            document.getElementById('bodyLengthMsg').innerHTML =(bodyLength + ' / ' + maxCharsBody);
+        }
+        logBodyKey();
+
+    <% } %>
+
+</script>
+
+<%- include('../partials/footer.ejs'); %>

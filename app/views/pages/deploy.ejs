@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs', {title:"List Blogs"}); %>
+
+<div class="container container-body">
+
+  <div class="row g-3">
+    <div class="col">Edit Mode</div>
+    <div class="col">Deploy Ready</div>
+    <div class="col">Deployed</div>
+  </div>
+  <div class="row g-3">
+    <div class="col"><%= numEditMode %></div>
+    <div class="col"><%= numDeployReady %></div>
+    <div class="col"><%= numDeployed %></div>
+  </div>
+
+<br />
+<br />
+
+Click deploy to make all published blogs accessible via the homepage, navigation and search.
+<br />
+<br />
+<a href='/deploy?deploy=1' class='btn btn-primary'>Deploy</a>
+
+</div>
+
+<%- include('../partials/footer.ejs'); %>

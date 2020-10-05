@@ -1,0 +1,183 @@
+<%- include('../partials/header.ejs', {title: 'Image Gallery'}); %>
+
+<div class="container container-imagegallery container-body">
+
+<div id='imageViewerOverlayCont'>
+<div id='closeXLeft'>X</div>
+<div id='closeXRight'>X</div>
+<div id='imageViewerOverlay'></div>
+</div>
+
+<form id='form' method='post' action='/images/delete'>
+
+  <div id='galleryThumbWrapper'>
+
+  <% limit = 30; %>
+  <% for(let i = 0; i < limit; i++) {%>
+
+    <div class="galleryThumbContCont">
+      <div class='galleryThumbCont' id='cont_<%= i %>'></div>
+      <div class='deleteCheckboxCont'><label for='del_<%= i %>'>Delete: <input  class='checkboxDelete' id='del_<%= i %>' type = 'checkbox' name='deleteArr[]' value='<%= i %>'></label></div>
+    </div>
+
+  <% } %>
+  </div>
+
+  <div style='clear:both;'></div>
+  <div id="imageGalleryNavCont">
+    <div class="btn" id="imageGalleryNavPrev">&laquo;</div>
+    <div class="btn" id="imageGalleryNavNext">&raquo;</div>
+    <div style='clear:both;'></div>
+  </div>
+
+  <div id='serverResponse'></div>
+  <div style='clear:both;'></div>
+  <div class='deleteImageGalleryBtn'><button type="submit" class="btn btn-primary">Delete Checked</button></div>
+
+</form>
+
+
+
+</div>
+
+<script>
+
+  let limit = <%= limit %>;
+  let blogSpecificThumbArr = [];
+  let idArr = [];
+  let deleteIdArr = [];
+  let offset = 0;
+
+  document.getElementById('form').addEventListener('submit', submit);
+  function submit(e) {
+    e.preventDefault();
+    let checkboxDeleteEl = document.getElementsByClassName("checkboxDelete");
+    Array.from(checkboxDeleteEl).forEach(function(el) {
+      if (el.checked) {
+        deleteIdArr.push(idArr[el.value]);
+      }
+    });
+    document.getElementById("serverResponse").innerHTML = '';
+    if (deleteIdArr.length) {
+      let xhr = new XMLHttpRequest();
+      let delStr = deleteIdArr.join('-');
+      xhr.open('GET', '/images/delete?del=' + delStr, true);
+      xhr.onload = function () {
+        if (xhr.status != 200) {
+          document.getElementById('serverResponse').innerHTML = xhr.response;
+        } else {
+          let r = JSON.parse(xhr.response);
+          if (r && r.length) {
+            let msg = '<br />The following images must be removed from the body of the blog before they can be deleted:<br />';
+            for(let i in r) {
+              let obj = r[i];
+              let blogId = obj.blogId;
+              let imgSrc = obj.imgSrc;
+              msg+="<a target='_blank' href='/form?id=" + blogId + "'><div class='blogThumbCont'><img class='blogthumb' src='" + imgSrc + "'></a></div> &nbsp; ";
+            }
+            document.getElementById("serverResponse").innerHTML = msg;
+          }
+        }
+        deleteIdArr = [];
+        loadGallery(offset);
+      };
+      xhr.send(null);
+    }
+  }
+
+  function loadGallery(offset) {
+
+    let request = new XMLHttpRequest();
+    request.open('get', '/images/all?offset=' + offset + '&limit=' + <%= limit %>);
+
+    // AJAX request finished event
+    request.addEventListener('load', function(e) {
+      if (request.status !== 200) {
+        //let r = JSON.parse(request.response);
+        document.getElementById("serverResponse").innerHTML = request.response;
+      } else {
+        blogSpecificThumbArr = JSON.parse(request.response);
+        idArr = [];
+        for(let i in blogSpecificThumbArr) {
+          idArr.push(blogSpecificThumbArr[i].id);
+          let parent = document.getElementById("cont_" + i);
+          parent.parentNode.style.display='block';
+          if (document.body.contains(document.getElementById('id_' + i))) {
+            parent.removeChild(document.getElementById('id_' + i));
+          }
+          let divDom = document.createElement('div');
+          divDom.className="blogThumbCont";
+          divDom.id='id_' + i;
+          let imgDom = document.createElement("img");
+          imgDom.src = '/img/' + blogSpecificThumbArr[i].id + '_thumb.' + blogSpecificThumbArr[i].ext;
+          imgDom.className = "blogthumb";
+          divDom.appendChild(imgDom);
+          parent.appendChild(divDom);
+          imgDom.addEventListener('click', thumbClick);
+          document.getElementById('del_' + i).checked = false;
+
+        }
+        if (limit > blogSpecificThumbArr.length) {
+          for(let i = limit - 1; i >= blogSpecificThumbArr.length; i--) {
+            let parent = document.getElementById("cont_" + i);
+            parent.parentNode.style.display='none';
+          }
+        }
+        setNav();
+      }
+    });
+    request.send();
+  }
+  loadGallery(offset);
+
+  function setNav() {
+
+    if (blogSpecificThumbArr.length <= 0 || offset <= 0) {
+      document.getElementById("imageGalleryNavPrev").classList.add("disabled");
+    } else {
+      document.getElementById("imageGalleryNavPrev").classList.remove("disabled");
+    }
+    if (blogSpecificThumbArr.length < limit ) {
+      document.getElementById("imageGalleryNavNext").classList.add("disabled");
+    } else {
+      document.getElementById("imageGalleryNavNext").classList.remove("disabled");
+    }
+  }
+
+  document.getElementById('closeXLeft').addEventListener('click', closeX);
+  document.getElementById('closeXRight').addEventListener('click', closeX);
+  function closeX() {
+    document.getElementById("imageViewerOverlayCont").style.display = 'none';
+    let el = document.getElementById("imageViewerOverlay");
+    el.removeChild(document.getElementById("imageGalleryFullImage"));
+  }
+
+  function thumbClick(e) {
+    document.getElementById("imageViewerOverlayCont").style.display = 'block';
+    let imgSrc = e.srcElement.attributes.src.nodeValue
+    imgSrc = imgSrc.replace("_thumb", "");
+    let imgDom = document.createElement("img");
+    imgDom.src = imgSrc;
+    imgDom.className = 'imageGalleryFullImage';
+    imgDom.id = 'imageGalleryFullImage';
+    let el = document.getElementById("imageViewerOverlay");
+    el.appendChild(imgDom);
+  }
+  document.getElementById('imageGalleryNavPrev').addEventListener('click', prev);
+  function prev() {
+    if (offset - limit < 0) {
+      return
+    }
+    offset-=limit;
+    loadGallery(offset);
+  }
+  document.getElementById('imageGalleryNavNext').addEventListener('click', next);
+  function next() {
+    if (limit >  blogSpecificThumbArr.length) {
+      return
+    }
+    offset+=limit;
+    loadGallery(offset);
+  }
+
+</script>
