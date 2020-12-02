@@ -9,7 +9,7 @@ Then run:
 ```
 docker-compose up --build
 ```
-Once that is up, to build the db, on the host machine run on the command line:
+Once that is up, to initialize the db, on the host machine run on the command line:
 ```
 docker exec -it db bash -c "cd /app && bash init.sh"
 ```

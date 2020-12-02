@@ -210,7 +210,7 @@ exports.delete = async (req, res) => {
   }
 
   try {
-    await Blog.update({deleted:1,deleteImages:deleteImages}, {where:{id:blogId}});
+    await Blog.update({deployed:0,deleted:1,deleteImages:deleteImages}, {where:{id:blogId}});
   } catch(e) {
     return res.render("pages/error", {error: "Blog not found. Could not delete Blog with id " + blogId + " : " + err});
   }
@@ -339,7 +339,6 @@ exports.deploy = async (req, res) => {
           if (fileExists) {
             await awsService.deleteFileFromS3(fileName);
             console.log("XXXXXXXXXXXXXXXX deleting from s3 " + fileName);
-            blogArr.splice(i, 1);
           }
         }
       }
@@ -659,6 +658,7 @@ const getBlogArr = (offset, deployed, tagId, isDeployment) => {
           arr[i].updatedAt = tmp.updatedAt;
           arr[i].createdAt = tmp.createdAt;
           arr[i].deployed = tmp.deployed;
+          arr[i].deleted = tmp.deleted;
           let imageId = tmp.imageId;
           if (imageId) {
             let imageArr = await Image.findAll({raw: true, where:{id:imageId}});

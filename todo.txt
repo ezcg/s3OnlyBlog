@@ -1,0 +1,3 @@
+undelete blog
+delete blog when deployed = 0 (currently getBlogArr only gets deployed > 0)
+

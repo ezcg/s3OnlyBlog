@@ -37,7 +37,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - ./mysql/docker/data/db:/var/lib/mysql
+      - ./mysql/docker/data/db:/app/docker
       - ./mysql:/app
 
 # https://stackoverflow.com/questions/55559386/how-to-fix-mbind-operation-not-permitted-in-mysql-error-log

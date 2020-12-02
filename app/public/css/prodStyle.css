@@ -39,7 +39,7 @@ a {
 }
 .indexNavPrevCont, .indexNavNextCont {
     border-radius:10px;
-    width:100px;
+    width:135px;
     border:2px solid #000000;
     background-color:#fafafa;
     padding:6px;
@@ -125,7 +125,7 @@ a {
 }
 
 .tagLinkHeader {
-    width:159px;
+    width:200px;
     float:left;
     border:0px solid black;
 }
